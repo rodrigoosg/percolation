@@ -74,7 +74,9 @@ public class Percolation {
   }  
   
   //is site (row, col) full?
-  //public boolean isFull(int row, int col) {}  
+  public boolean isFull(int row, int col) {
+	  return wuf.connected(percolationSiteIndex[row][col], top);
+  }  
   
   //number of open sites
   public int numberOfOpenSites() {
