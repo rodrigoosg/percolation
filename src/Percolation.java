@@ -56,15 +56,19 @@ public class Percolation {
 	int leftCol = col - 1;
     if(row > 1 && this.isOpen(upperRow, col)){
     	wuf.union(percolationSiteIndex[row][col], percolationSiteIndex[upperRow][col]);
+    	numberOfOpenSites++;
     }
     if(row < gridSize && this.isOpen(downRow, col)){
     	wuf.union(percolationSiteIndex[row][col], percolationSiteIndex[downRow][col]);
+    	numberOfOpenSites++;
     }
     if(col < gridSize && this.isOpen(row, rightCol)){
     	wuf.union(percolationSiteIndex[row][col], percolationSiteIndex[row][rightCol]);
+    	numberOfOpenSites++;
     }
     if(col > 1 && this.isOpen(row, leftCol)){
     	wuf.union(percolationSiteIndex[row][col], percolationSiteIndex[row][leftCol]);
+    	numberOfOpenSites++;
     }
   }
   
@@ -90,12 +94,14 @@ public class Percolation {
 
   public static void main(String[] args) {
 	int n = 3;
+	int totalNumberOfSites = n*n;
     Percolation percolationObj = new Percolation(n);
     for (int i = 1; i <= n; i++) {
     	for (int j = 1; j <= n; j++) {
         	System.out.println("PercolationArray[" + i + "]["+ j +"]: " + percolationSiteIndex[i][j]);
         	System.out.println("Connected top: " + wuf.connected(top, percolationSiteIndex[i][j]));
         	System.out.println("Connected bottom: " + wuf.connected(bottom, percolationSiteIndex[i][j]));
+        	System.out.println("Is full: " + percolationObj.isFull(i, j));
         	System.out.println("Percolation Status: " + percolationObj.isOpen(i,j));
     	}
     }
@@ -109,9 +115,16 @@ public class Percolation {
     	for (int j = 1; j <= n; j++) {
         	System.out.println("PercolationArray[" + i + "]["+ j +"]: " + percolationSiteIndex[i][j]);
         	System.out.println("Percolation Status: " + percolationObj.isOpen(i,j));
+        	System.out.println("Is full: " + percolationObj.isFull(i, j));
     	}
     }
     System.out.println("Percolates: " + percolationObj.percolates());
+    System.out.println("Number of open sites: " + numberOfOpenSites);
+    System.out.println("Number of total sites: " + totalNumberOfSites);
+    int numberOfClosedSites = totalNumberOfSites - numberOfOpenSites;
+    System.out.println("Number of closed sites: " + numberOfClosedSites);
+    float p = (float) numberOfOpenSites / numberOfClosedSites;
+    System.out.println("p: " + p);
   }
 
 }
